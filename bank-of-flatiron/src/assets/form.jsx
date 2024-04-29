@@ -1,46 +1,64 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from 'react';
 
+export default function TransactionForm({ onAddTransaction, selectedDate, setSelectedDate }) {
+  const [description, setDescription] = useState('');
+  const [amount, setAmount] = useState('');
+  const [category, setCategory] = useState('');
 
-
-export default function TransactionForm({ onAddTransaction }) {
-    const [date, setDate] = useState('');
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const newTransaction = {
-        date,
-        description,
-        amount
-      };
-      onAddTransaction(newTransaction);
-      setDate('');
-      setDescription('');
-      setAmount('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!description.trim() || !amount.trim() || !category.trim()) return;
+    const newTransaction = {
+      description,
+      amount: parseFloat(amount),
+      date: selectedDate,
+      category
     };
-  
-    return (
-      <form onSubmit={handleSubmit}>
+    onAddTransaction(newTransaction);
+    setDescription('');
+    setAmount('');
+    setCategory('');
+  };
+
+  return (
+    <>
+    <form onSubmit={handleSubmit}>
+        <label htmlFor="description">Description:</label>
         <input
           type="text"
-          placeholder="Date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Description"
+          id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        <label htmlFor="amount">Amount:</label>
         <input
           type="number"
-          placeholder="Amount"
+          id="amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <button type="submit">Add Transaction</button>
-      </form>
-    )}
+        <label htmlFor="category">Category:</label>
+        <select
+          id="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="">Select a category</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Food">Food</option>
+          <option value="Domestic bills">Domestic bills</option>
+          <option value="Employees">Employees</option>
+          <option value="Others">Others</option>
+        </select>
+        <label>Date:</label>
+        <input
+        id='date'
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        />
+      <button type="submit">Add Transaction</button>
+    </form>
+    </>
+  );
+}
