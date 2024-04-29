@@ -1,14 +1,12 @@
 import './App.css';
 import { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import TransactionForm from './assets/form';
 import TransactionTable from './assets/table';
 
 export default function App() {
   const [transactions, setTransactions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null); // State for selected date
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleAddTransaction = (newTransaction) => {
     newTransaction.date = selectedDate;
@@ -30,8 +28,8 @@ export default function App() {
       />
       <TransactionForm 
         onAddTransaction={handleAddTransaction} 
-        selectedDate={selectedDate} // Pass selectedDate state to TransactionForm
-        setSelectedDate={setSelectedDate} // Pass setSelectedDate function to update selectedDate
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
       <TransactionTable transactions={filteredTransactions} />
     </div>
