@@ -1,5 +1,4 @@
 import React from 'react';
-import transactions from 'src/App.jsx'
 
 export default function TransactionTable({transactions}) {
   return (
